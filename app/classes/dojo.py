@@ -18,23 +18,27 @@ class Dojo(object):
 
     def create_room(self, room_type, *room_name):
         message = ""
+        dicts = {}
         for room in room_name:
+            dicts[room] = []
             if room_type.lower() == 'office':
-                if self.rooms[0]['offices'].append({room:[]}):
-                    message += "An " + room_type + " called " + room + " has been successfully created!"
-                    self.office.record_office(room)
+                self.rooms[0]['offices'].append(dicts)
+                message += "An " + room_type + " called " + room + " has been successfully created!"
+                self.office.record_office(room)
             elif room_type.lower() == 'livingspace':
-                if self.rooms[1]['living_spaces'].append({room:[]}):
-                    message += "A " + room_type + " called " + room + " has been successfully created!"
-                    self.living_space.record_livingspace(room)
+                self.rooms[1]['living_spaces'].append(dicts)
+                message += "A " + room_type + " called " + room + " has been successfully created!"
+                self.living_space.record_livingspace(room)
 
             else:
                 message += "The room " + room + " must be either an office or living"
 
         return message
 
-    def add_person(self, person_first_name, person_last_name, person_type, wants_accomodation='N'):
-        person_name = person_first_name + " " + person_last_name
+    def add_person(self, person_name, person_type, wants_accomodation='N'):
+        names = person_name.split()
+        person_first_name = names[0]
+        person_last_name = names[1]
         if person_type.lower() == 'fellow':
             if self.people[0]['fellows'].append(person_name):
                 self.fellow.record_fellow(person_name)
@@ -83,11 +87,11 @@ class Dojo(object):
     def print_room(self,room_name):
         for dicts in self.rooms[0]['offices']:  #[{'room':[occ1,occ2,occ3]},{},{}]
             if room_name in dicts:
-                print(dicts[room_name])
+                return (dicts[room_name])
 
         for dicts in self.rooms[1]['living_spaces']:
             if room_name in dicts:
-                print(dicts[room_name])
+                return (dicts[room_name])
 
     def print_allocations(self):
         for dicts in self.rooms[0]['offices']:  #[{'room':[occ1,occ2,occ3]},{},{}]
@@ -145,3 +149,8 @@ class Dojo(object):
     def save_state(self):pass
 
     def load_state(self):pass
+
+dojo = Dojo()
+
+print(dojo.create_room('office','Dojo Room 1'))
+print(dojo.create_room('livingspace','Dojo Room 2'))
