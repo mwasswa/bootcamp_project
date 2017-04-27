@@ -21,10 +21,7 @@ class TestDojoApplication(unittest.TestCase):
         self.test_add_fellow = self.sample_dojo.people_in_dojo[0]
 
         self.sample_dojo.add_person({"<first_name>": "Test","<last_name>": "Staff","<wants_space>": "Y","Fellow": False,"Staff": True})
-
-
-        self.test_add_fellow = self.sample_dojo.people_in_dojo[0]
-        self.test_add_staff = self.sample_dojo.people_in_dojo[1]
+        self.test_add_staff = self.sample_dojo.people_in_dojo[0]
 
     def test_create_room(self):
         self.assertEqual(2, len(self.sample_dojo.dojo_rooms))
@@ -86,4 +83,4 @@ class TestDojoApplication(unittest.TestCase):
             lines = myfile.readlines()
             self.assertTrue("People without rooms\n" in lines)
             self.assertTrue("There are no unallocated people in the system.\n" in lines)
-        #os.remove("test_print_unallocated.txt")
+        os.remove("test_print_unallocated.txt")
