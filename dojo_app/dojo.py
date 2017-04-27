@@ -67,6 +67,7 @@ class Dojo(object):
         wants_accomodation = commandline_args["<wants_space>"]
         self.reconcile_room_occupancy()
         if commandline_args["Staff"]:
+            self.reconcile_room_occupancy()
             new_staff = Staff(person_name)
             self.dojo_staff.append(new_staff)
 
@@ -80,6 +81,7 @@ class Dojo(object):
             self.people_with_rooms.append(new_staff)
             self.people_in_dojo.append(new_staff)
         elif commandline_args["Fellow"]:
+            self.reconcile_room_occupancy()
             new_fellow = Fellow(person_name)
             self.dojo_fellows.append(new_fellow)
             self.people_in_dojo.append(new_fellow)
@@ -96,6 +98,7 @@ class Dojo(object):
                 livingspace_choice = random.choice(self.dojo_free_livingspaces)
                 livingspace_choice.occupants.append(new_fellow)
                 message += commandline_args["<first_name>"] + " has been allocated the office %s " % str(livingspace_choice)
+            print(message)
 
     def reallocate_person(self, args):
 

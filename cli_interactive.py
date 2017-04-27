@@ -6,6 +6,7 @@ Usage:
     (dojo) create_room (livingspace|office) <room_name>...
     (dojo) add_person <first_name> <last_name> <FELLOW> | <STAFF> [wants_accommodation]
     (dojo) load_people <filename>
+    (dojo) print_allocations [--o=<filename>]
     (dojo)
     (dojo) (-i | --interactive)
     (dojo) (-h | --help)
@@ -13,6 +14,7 @@ Options:
     -i, --interactive  Interactive Mode
     -h, --help  Show this screen and exit.
     --baud=<n>  Baudrate [default: 9600]
+    --o=<filename>
 """
 
 import sys
