@@ -84,6 +84,6 @@ class TestDojoApplication(unittest.TestCase):
 
         with open("test_print_unallocated.txt") as myfile:
             lines = myfile.readlines()
-            self.assertTrue("Unallocated People\n" in lines)
-            self.assertTrue("Test Fellow2\n" in lines)
-        os.remove("test_print_unallocated.txt")
+            self.assertTrue("People without rooms\n" in lines)
+            self.assertTrue("There are no unallocated people in the system.\n" in lines)
+        #os.remove("test_print_unallocated.txt")

@@ -204,9 +204,7 @@ class Dojo(object):
                 if person not in self.people_without_rooms:
                     self.people_without_rooms.append(person)
         if not self.people_in_dojo:
-            message += "There are no people in the system.\n"
-            message += "Add a person using the add_person command" \
-                      " and try again.\n"
+            message += "There are no people in the system.\n Add a person using the add_person command and try again.\n"
         elif not self.people_without_rooms:
             message += "There are no unallocated people in the system.\n"
         print(message)
