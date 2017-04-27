@@ -4,9 +4,9 @@ class Database(object):
 
     already_added = []
 
-    def __init__(self, my_amity):
+    def __init__(self, dojo):
         self.db = None
-        self.my_amity = my_amity
+        self.dojo = dojo
 
     def save_state(self, args):
         if args["--db"]:
@@ -42,13 +42,13 @@ class Database(object):
         else:
             people.create()
         insert = people.insert()
-        for person in self.my_amity.people:
+        for person in self.dojo.people:
             if person not in self.already_added:
-                if person.job_type == "Fellow":
+                if person.person_type == "Fellow":
                     is_fellow = True
                 else:
                     is_fellow = False
-                if person in self.my_amity.allocated_people:
+                if person in self.dojo.allocated_people:
                     is_allocated = True
                 else:
                     is_allocated = False
@@ -76,13 +76,13 @@ class Database(object):
         else:
             rooms.create()
         insert = rooms.insert()
-        for room in self.my_amity.rooms:
+        for room in self.dojo.rooms:
             if room not in self.already_added:
                 if room.room_type == "Office":
                     is_office = True
                 else:
                     is_office = False
-                if room in self.my_amity.vacant_rooms:
+                if room in self.dojo.vacant_rooms:
                     is_vacant = True
                 else:
                     is_vacant = False
@@ -98,8 +98,8 @@ class Database(object):
         Add data from the Allocations list to the database.
         Each room gets a database table with occupants as rows.
         """
-        if self.my_amity.rooms:
-            for room in self.my_amity.rooms:
+        if self.dojo.rooms:
+            for room in self.dojo.rooms:
                 room_name = room.name
                 room_name = Table(
                         room_name, self.metadata,
@@ -122,8 +122,7 @@ class Database(object):
                             name=person.name
                         )
 
-    def load_state(self, args):  # pragma: no cover
-        """Load data to the application from a user-defined database"""
+    def load_state(self, args):
         self.db_name = "sqlite:///" + "%s" % args.get("<sqlite_database>")
         self.db = create_engine(self.db_name)
         connection = self.db.connect()
@@ -144,7 +143,7 @@ class Database(object):
                 is_fellow = False
                 is_staff = True
 
-            self.my_amity.add_person({
+            self.dojo.add_person({
                     "<first_name>": row["first_name"],
                     "<last_name>": row["last_name"],
                     "<wants_space>": "N",
@@ -154,7 +153,7 @@ class Database(object):
 
             # Change emp_id to what is in the database
             employee_id = row["employee_id"]
-            person_from_db = self.my_amity.people[-1]
+            person_from_db = self.dojo.people[-1]
             person_from_db.emp_id = employee_id
 
         for row in rooms:
@@ -163,7 +162,7 @@ class Database(object):
             else:
                 is_living = True
 
-            self.my_amity.create_room({
+            self.dojo.create_room({
                 "<room_name>": [row["name"]],
                 "Living": [is_living],
                 "Office": [row["is_office"]]
@@ -177,7 +176,7 @@ class Database(object):
                 emp_id = row["employee_id"]
                 emp_id = str(emp_id)
 
-                self.my_amity.reallocate_person({
+                self.dojo.reallocate_person({
                     "<employee_id>": emp_id,
                     "<new_room_name>": table_name
                 })

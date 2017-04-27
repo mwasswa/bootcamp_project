@@ -24,6 +24,7 @@ from dojo_app.dojo import Dojo
 #from Dojo import dojo
 from database.database import Database
 dojo = Dojo()
+db = Database()
 def docopt_cmd(func):
     """
     This decorator is used to simplify the try/except block and pass the result
@@ -58,7 +59,7 @@ def docopt_cmd(func):
 class MyInteractive (cmd.Cmd):
     intro = 'Welcome to Dojo interactive Application!' \
         + ' (type help for a list of commands.)'
-    prompt = '(my_program) '
+    prompt = '(The Dojo) '
     file = None
 
     @docopt_cmd
@@ -100,12 +101,12 @@ class MyInteractive (cmd.Cmd):
     @docopt_cmd
     def do_save_state(self, args):
         """Usage: save_state [--db=sqlite_database]"""
-        # db.save_state(args)
+        db.save_state(args)
 
     @docopt_cmd
     def do_load_state(self, args):
         """Usage: load_state <sqlite_database>"""
-        # db.load_state(args)
+        db.load_state(args)
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
