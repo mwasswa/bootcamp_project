@@ -8,21 +8,21 @@ class TestDojoApplication(unittest.TestCase):
     def setUp(self):
         self.sample_dojo = Dojo()
         """Create sample Living Room in Test Dojo"""
-        self.sample_dojo.create_room({"<room_name>": ["SRoomA"],"Living": True,"Office": False})
+        self.sample_dojo.create_room({"<room_name>": ["SRoomA"], "Living": True, "Office": False})
         self.srooma = self.sample_dojo.dojo_livingspaces[0]
 
         """Create Sample Office in This Test Dojo"""
-        self.sample_dojo.create_room({"<room_name>": ["RoomA"],"Living": False,"Office": True})
+        self.sample_dojo.create_room({"<room_name>": ["RoomA"], "Living": False, "Office": True})
         self.rooma = self.sample_dojo.dojo_office_rooms[0]
 
         """Add Sample Person <Fellow> To Sample Dojo"""
-        self.sample_dojo.add_person({"<first_name>": "Test","<last_name>": "Fellow","<wants_space>": "Y", \
+        self.sample_dojo.add_person({"<first_name>": "Test", "<last_name>": "Fellow", "<wants_space>": "Y",
                                      "Fellow": True, "Staff": False})
         self.test_add_fellow = self.sample_dojo.people_in_dojo[0]
 
         """Add Sample Person <Staff> To Sample Dojo"""
-        self.sample_dojo.add_person({"<first_name>": "Test","<last_name>": "Staff","<wants_space>": "Y", \
-                                     "Fellow": False,"Staff": True})
+        self.sample_dojo.add_person({"<first_name>": "Test", "<last_name>": "Staff", "<wants_space>": "Y",
+                                     "Fellow": False, "Staff": True})
         self.test_add_staff = self.sample_dojo.people_in_dojo[0]
 
     """The method to test create_room Dojo method"""
@@ -32,17 +32,17 @@ class TestDojoApplication(unittest.TestCase):
         self.assertEqual(1, len(self.sample_dojo.dojo_office_rooms))
 
         """Adding Living Spaces SRoomB, SRoomC to the Dojo and verifying that they are successfully added"""
-        self.sample_dojo.create_room({"<room_name>": ["SRoomB", "SRoomC"],"Living": True,"Office": False})
+        self.sample_dojo.create_room({"<room_name>": ["SRoomB", "SRoomC"], "Living": True, "Office": False})
         self.assertEqual(4, len(self.sample_dojo.dojo_rooms))
         self.assertEqual(3, len(self.sample_dojo.dojo_livingspaces))
 
         """Adding Offices RoomB, RoomC to the Dojo and verifying that they are successfully added"""
-        self.sample_dojo.create_room({"<room_name>": ["RoomB", "RoomC"],"Living": False,"Office": True})
+        self.sample_dojo.create_room({"<room_name>": ["RoomB", "RoomC"], "Living": False, "Office": True})
         self.assertEqual(6, len(self.sample_dojo.dojo_rooms))
         self.assertEqual(3, len(self.sample_dojo.dojo_office_rooms))
 
         """Adding Offices RoomA, RoomB to the Dojo and verifying that they are successfully added"""
-        self.sample_dojo.create_room({"<room_name>": ["RoomA", "RoomB"],"Living": False,"Office": True})
+        self.sample_dojo.create_room({"<room_name>": ["RoomA", "RoomB"], "Living": False, "Office": True})
         self.assertEqual(6, len(self.sample_dojo.dojo_rooms))
         self.assertEqual(3, len(self.sample_dojo.dojo_office_rooms))
 
@@ -55,7 +55,7 @@ class TestDojoApplication(unittest.TestCase):
 
     """Method to test that the existance of room rooms that still have free slots"""
     def test_free_offices(self):
-        self.sample_dojo.create_room({"<room_name>": ["RoomB"],"Living": False,"Office": True})
+        self.sample_dojo.create_room({"<room_name>": ["RoomB"], "Living": False, "Office": True})
         self.sample_dojo.reconcile_room_occupancy()
         self.assertEqual(2, len(self.sample_dojo.dojo_free_offices))
         self.assertEqual(3, len(self.sample_dojo.dojo_free_rooms))
@@ -71,10 +71,10 @@ class TestDojoApplication(unittest.TestCase):
             self.assertTrue("Test Fellow, Test Staff\n" in lines)
         os.remove("test_print_allocated.txt")
 
-    """Test printing unallocations to text files"""
+    """Test printing un-allocations to text files"""
     def test_print_unallocated(self):
-        self.sample_dojo.add_person({"<first_name>": "Test","<last_name>": "Fellow2","<wants_space>": "N", \
-                                     "Fellow": True,"Staff": False})
+        self.sample_dojo.add_person({"<first_name>": "Test", "<last_name>": "Fellow2", "<wants_space>": "N",
+                                     "Fellow": True, "Staff": False})
         self.sample_dojo.print_unallocated({"--o": "test_print_unallocated.txt"})
         self.assertTrue(os.path.exists("test_print_unallocated.txt"))
         with open("test_print_unallocated.txt") as myfile:
