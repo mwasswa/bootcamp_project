@@ -5,8 +5,10 @@ interactive command application.
 Usage:
     (dojo) create_room (livingspace|office) <room_name>...
     (dojo) add_person <first_name> <last_name> <FELLOW> | <STAFF> [wants_accommodation]
+    (dojo) reallocate_person <first_name> <last_name> <new_room>
     (dojo) load_people <filename>
     (dojo) print_allocations [--o=<filename>]
+    (dojo) print_unallocated [--o=<filename>]
     (dojo)
     (dojo) (-i | --interactive)
     (dojo) (-h | --help)
@@ -75,7 +77,7 @@ class MyInteractive (cmd.Cmd):
 
     @docopt_cmd
     def do_reallocate_person(self, args):
-        """Usage: reallocate_person <employee_id> <new_room_name>"""
+        """Usage: reallocate_person <first_name> <last_name> <new_room>"""
         dojo.reallocate_person(args)
 
     @docopt_cmd
@@ -98,11 +100,9 @@ class MyInteractive (cmd.Cmd):
         """Usage: print_room <room_name>"""
         dojo.print_room(args)
 
-
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
-
-        print('Good Bye!')
+        print('Thanks for using the Dojo Good Bye!')
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])
