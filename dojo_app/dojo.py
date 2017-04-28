@@ -95,7 +95,7 @@ class Dojo(object):
                 livingspace_choice.occupants.append(new_fellow)
                 message += commandline_args["<first_name>"] + " has been allocated the Living Space %s "\
                                                               % str(livingspace_choice)
-            print(message)
+        print(message)
 
     def reallocate_person(self, args):
         person_name = args["<first_name>"] + " " + args["<last_name>"]
