@@ -8,7 +8,7 @@ and Fellows while also tracking room occupancy at any point in time. These rooms
 still some free slots in the said room. An office can only sit up to six (6) people while a living room can house up to four (4) people
 
 #PROJECT INSTALLATION BRIEF
-The project has been built in Python and recommends Python 3 and above. Ensure you have installed everything in the requirements.txt file, then on the commandline launch the application
+The project has been built in Python and recommends Python 3 and above. Ensure you have installed everything in the requirements.txt file, (run pip install -r requirements.txt) together with an install of Python 3 or above. Then on the commandline launch the application
 from the command:
 
 python cli_interactive.py
