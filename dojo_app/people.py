@@ -6,7 +6,7 @@ class Person(object):
         self.name = name
 
     def __str__(self):
-        return "<Room %s>" % self.name
+        return self.name #"<Person %s>" % self.name
 
 
 class Staff(Person):
@@ -17,7 +17,7 @@ class Staff(Person):
         super(Staff, self).__init__(name)
 
     def __str__(self):
-        return "<Staff %s>" % self.name
+        return self.name #"<Staff %s>" % self.name
 
 
 class Fellow(Person):
@@ -28,4 +28,4 @@ class Fellow(Person):
         super(Fellow, self).__init__(name)
 
     def __str__(self):
-        return "Fellow %s>" % self.name
+        return self.name #"Fellow %s>" % self.name

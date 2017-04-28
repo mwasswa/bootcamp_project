@@ -4,7 +4,7 @@ class Room(object):
         self.name = name
 
     def __str__(self):
-        return "<Room %s>" % (self.name)
+        return self.name #"<Room %s>" % (self.name)
 
 
 
@@ -15,7 +15,7 @@ class Office(Room):
         super(Office, self).__init__(name)
 
     def __str__(self):
-        return "<Office %s>" % (self.name)
+        return self.name #"<Office %s>" % (self.name)
 
 
 class Living(Room):
@@ -26,4 +26,4 @@ class Living(Room):
         super(Living, self).__init__(name)
 
     def __str__(self):
-        return "<Living space %s>" % (self.name)
+        return self.name #"<Living space %s>" % (self.name)

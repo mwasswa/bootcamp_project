@@ -1,0 +1,24 @@
+Room1A
+--------------------------------------------------
+Simon Patterson, Kelly Mcguire
+
+Room1B
+--------------------------------------------------
+Oluwafemi Sule, Dominic Walters, Mari Lawrence
+
+Room1C
+--------------------------------------------------
+Leigh Riley, Tana Lopez
+
+SRoom1A
+--------------------------------------------------
+Simon Patterson, Mari Lawrence, Tana Lopez
+
+SRoom1B
+--------------------------------------------------
+This room has no occupants.
+
+SRoom1C
+--------------------------------------------------
+Oluwafemi Sule
+

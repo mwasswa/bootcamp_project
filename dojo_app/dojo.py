@@ -70,16 +70,14 @@ class Dojo(object):
             self.reconcile_room_occupancy()
             new_staff = Staff(person_name)
             self.dojo_staff.append(new_staff)
-
+            self.people_in_dojo.append(new_staff)
             message = person_name + " has been successfully added!\n"
-
-            random_choice = random.choice(self.dojo_free_offices)
-            random_choice.occupants.append(new_staff)
-
-            message += commandline_args["<first_name>"] + " has been allocated the office %s " % str(random_choice)
+            random_office_choice = random.choice(self.dojo_free_offices)
+            random_office_choice.occupants.append(new_staff)
+            message += commandline_args["<first_name>"] + " has been allocated the office %s " % str(random_office_choice)\
+            + "\n"
             self.staff_with_rooms.append(new_staff)
             self.people_with_rooms.append(new_staff)
-            self.people_in_dojo.append(new_staff)
         elif commandline_args["Fellow"]:
             self.reconcile_room_occupancy()
             new_fellow = Fellow(person_name)
@@ -88,48 +86,50 @@ class Dojo(object):
             message = person_name + " has been successfully added!\n"
             random_choice = random.choice(self.dojo_free_offices)
             random_choice.occupants.append(new_fellow)
-
-            message += commandline_args["<first_name>"] + " has been allocated the office %s " % str(random_choice)
-
+            message += commandline_args["<first_name>"] + " has been allocated the Office %s " % str(random_choice)\
+            + "\n"
             self.fellows_with_rooms.append(new_fellow)
             self.people_with_rooms.append(new_fellow)
-
             if wants_accomodation == 'Y':
                 livingspace_choice = random.choice(self.dojo_free_livingspaces)
                 livingspace_choice.occupants.append(new_fellow)
-                message += commandline_args["<first_name>"] + " has been allocated the office %s " % str(livingspace_choice)
+                message += commandline_args["<first_name>"] + " has been allocated the Living Space %s "\
+                                                              % str(livingspace_choice)
             print(message)
 
     def reallocate_person(self, args):
-
-        person_name = args["<person_name>"]
+        person_name = args["<first_name>"] + " " + args["<last_name>"]
         new_person = None
-
         for person in self.people_in_dojo:
             if person.name == person_name:
                 new_person = person
-        if new_person is None:
-            return "The Person " + person_name + "does not exist in the Dojo. " + "Use the add_person command to register them"
 
+        if new_person is None:
+            print("The Person " + person_name + "does not exist in the Dojo. \n" \
+            "Use the add_person command to register them\n")
+            return
         new_room_name = args["<new_room>"]
+
         for room in self.dojo_rooms:
             if room.name == new_room_name:
                 new_room = room
 
         if new_room_name not in [r.name for r in self.dojo_free_rooms]:
-            return "The room " + new_room_name + " is either vacant or does not exist"
+            print("The room " + new_room_name + " is either vacant or does not exist")
+            return
 
         if new_person.person_type == "Staff":
             if new_room.room_type == "Living":
-                return person_name + " is is of type Staff and cannot be assigned a living space " + new_room
+                print(person_name + " is of type Staff and cannot be assigned a living space " + new_room)
+                return
 
         for room in self.dojo_free_rooms:
             if new_person.name in [person.name for person in room.occupants]:
                 if new_room == room:
-                    return new_person.name + " is already an occupant of room %s " % str(room)
+                    print(new_person.name + " is already an occupant of room %s " % str(room))
+                    return
                 else:
                     room.occupants.remove(new_person)
-
 
         new_room.occupants.append(new_person)
         self.people_with_rooms.append(new_person)
@@ -144,7 +144,7 @@ class Dojo(object):
         if new_person in self.people_without_rooms:
             self.people_without_rooms.remove(new_person)
 
-        return "The person has been successfully re-allocated the room %s " % str(new_room)
+        print("The person has been successfully re-allocated the room %s " % str(new_room))
 
     def load_people(self, args):
         filename = args["<filename>"]
@@ -217,7 +217,7 @@ class Dojo(object):
     def print_room(self, args):
         room_name = args["<room_name>"]
         if room_name not in [room_object.name for room_object in self.dojo_rooms]:
-            return "The room "+ room_name +"you have entered " + " doesn't exist"
+            return "The room "+ room_name +" you have entered " + " doesn't exist"
         else:
             for room in self.dojo_rooms:
                 if room.name == room_name:
